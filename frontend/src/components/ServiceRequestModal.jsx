@@ -41,11 +41,7 @@ function ServiceRequestModal({ isOpen, onClose }) {
         formDataToSend.append('attachment', selectedFile)
       }
 
-      const response = await axios.post('/api/requests', formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
+      const response = await axios.post('/api/requests', formDataToSend)
 
       if (response.status === 201) {
         setShowSuccess(true)

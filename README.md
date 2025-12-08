@@ -1,93 +1,68 @@
 # Campus Helper
 
-A full-stack web platform for managing campus service requests.
-
-## Project Structure
-
-```
-campus-helper/
-├── backend/          # Flask backend
-│   ├── app.py       # Main Flask application
-│   └── requirements.txt
-└── frontend/         # React + Vite frontend
-    ├── src/
-    │   ├── components/
-    │   ├── pages/
-    │   ├── App.jsx
-    │   └── main.jsx
-    ├── package.json
-    └── vite.config.js
-```
-
-## Setup Instructions
-
-### Backend Setup
-
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-
-2. Create a virtual environment (recommended):
-   ```bash
-   python -m venv venv
-   ```
-
-3. Activate the virtual environment:
-   - On Windows:
-     ```bash
-     venv\Scripts\activate
-     ```
-   - On macOS/Linux:
-     ```bash
-     source venv/bin/activate
-     ```
-
-4. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-5. Run the Flask server:
-   ```bash
-   python app.py
-   ```
-
-   The backend will run on `http://127.0.0.1:5000`
-
-### Frontend Setup
-
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-   The frontend will run on `http://localhost:5173` (or another port if 5173 is busy)
+> **Forman Code Fest 2025** - Campus services platform for FCCU
 
 ## Features
 
-- **Home Page**: Submit service requests with category and description
-- **Dashboard**: View all service requests in a table format
-- **Map**: Placeholder for future map feature
-- **AI Chat**: Chat interface with dummy AI responses (ready for real AI integration)
+- **Service Requests** - Submit maintenance, IT support, academic, and lost & found requests with optional photo attachments
+- **Admin Dashboard** - Manage all requests, update statuses, view statistics
+- **Campus Map** - Interactive map with key campus locations and Google Maps directions
+- **AI Assistant** - Google Gemini-powered chatbot for campus-related questions
+- **Announcements** - Campus news, events, and alerts feed
+
+## Tech Stack
+
+| Frontend | Backend |
+|----------|---------|
+| React 18 + Vite | Flask 3.0 |
+| Tailwind CSS | SQLAlchemy + SQLite |
+| React Router | Google Gemini AI |
+| Leaflet Maps | Flask-CORS |
+
+## Quick Start
+
+### Backend
+
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env      # Add your GEMINI_API_KEY
+python app.py
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Access
+
+- Frontend: http://localhost:5173
+- Backend: http://127.0.0.1:5001
+- **Admin login**: admin@fccu.edu / admin123
 
 ## API Endpoints
 
-- `POST /api/requests` - Submit a new service request
-- `GET /api/requests` - Get all service requests
-- `POST /api/chat` - Send a message to the AI chat (dummy response for now)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/requests` | Create service request |
+| GET | `/api/requests` | List all requests |
+| PUT | `/api/requests/:id` | Update request status |
+| DELETE | `/api/requests/:id` | Delete request |
+| POST | `/api/chat` | AI assistant |
+| GET | `/api/health` | Health check |
 
-## Database
+## Get Gemini API Key
 
-The SQLite database (`database.db`) will be automatically created in the backend directory when you first run the Flask application.
+1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Create API Key
+3. Add to `backend/.env`
 
+---
+
+**Forman Code Fest 2025** - FCCU

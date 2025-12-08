@@ -1,8 +1,8 @@
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Plus, LogOut, LogIn, LayoutDashboard, GraduationCap, MapPin } from 'lucide-react'
+import { Plus, LogOut, LogIn, LayoutDashboard, GraduationCap, MapPin, Menu } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 
-function Navbar({ onNewRequestClick }) {
+function Navbar({ onNewRequestClick, onMenuClick }) {
   const navigate = useNavigate()
   const location = useLocation()
   const { user, logout } = useAuth()
@@ -13,7 +13,6 @@ function Navbar({ onNewRequestClick }) {
   }
 
   const isAdmin = user?.role === 'admin'
-  const maxWidth = isAdmin ? 'max-w-7xl' : 'max-w-7xl'
 
   // If not logged in, show only Login
   if (!user) {
@@ -39,11 +38,17 @@ function Navbar({ onNewRequestClick }) {
   }
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-md">
-      <div className={`${maxWidth} mx-auto`}>
+    <nav className="sticky top-0 z-30 bg-white shadow-md">
+      <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center px-6 py-4">
-          {/* LEFT SIDE - Logo */}
+          {/* LEFT SIDE - Logo & Menu */}
           <div className="flex items-center space-x-3">
+            <button
+              onClick={onMenuClick}
+              className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <Menu size={24} />
+            </button>
             <GraduationCap className="text-blue-600" size={32} />
             <h1 className="text-2xl font-bold text-blue-600">CampusConnect</h1>
           </div>

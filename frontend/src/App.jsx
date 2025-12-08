@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
 import ServiceRequestModal from './components/ServiceRequestModal'
 import ChatWidget from './components/ChatWidget'
 import Login from './pages/Login'
@@ -9,6 +10,7 @@ import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
 import MapPage from './pages/MapPage'
 import AIChat from './pages/AIChat'
+import Profile from './pages/Profile'
 
 // Protected Route component
 function ProtectedRoute({ children, requireAdmin = false }) {
@@ -39,53 +41,68 @@ function HomeRoute() {
 function App() {
   const { user } = useAuth()
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   return (
     <Router>
       <div className="min-h-screen bg-gray-100">
-        <Navbar onNewRequestClick={() => setIsModalOpen(true)} />
-        <main>
-          <Routes>
-            <Route path="/login" element={!user ? <Login /> : <Navigate to="/" replace />} />
-            <Route 
-              path="/" 
-              element={
-                <ProtectedRoute>
-                  <HomeRoute />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/dashboard" 
-              element={
-                <ProtectedRoute requireAdmin={true}>
-                  <Dashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/map" 
-              element={
-                <ProtectedRoute>
-                  <MapPage />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/ai-chat" 
-              element={
-                <ProtectedRoute>
-                  <AIChat />
-                </ProtectedRoute>
-              } 
-            />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </main>
-        {user && user.role === 'student' && (
-          <ServiceRequestModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-        )}
-        {user && <ChatWidget />}
+        {user && <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />}
+        <div className={user ? 'lg:ml-64' : ''}>
+          <Navbar 
+            onNewRequestClick={() => setIsModalOpen(true)} 
+            onMenuClick={() => setIsSidebarOpen(true)}
+          />
+          <main>
+            <Routes>
+              <Route path="/login" element={!user ? <Login /> : <Navigate to="/" replace />} />
+              <Route 
+                path="/" 
+                element={
+                  <ProtectedRoute>
+                    <HomeRoute />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/dashboard" 
+                element={
+                  <ProtectedRoute requireAdmin={true}>
+                    <Dashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/map" 
+                element={
+                  <ProtectedRoute>
+                    <MapPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/chat" 
+                element={
+                  <ProtectedRoute>
+                    <AIChat />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/profile" 
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
+          {user && user.role === 'student' && (
+            <ServiceRequestModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+          )}
+          {user && <ChatWidget />}
+        </div>
       </div>
     </Router>
   )

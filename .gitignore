@@ -20,6 +20,7 @@ build/
 # IDE
 .vscode/
 .idea/
+.cursor/
 *.swp
 *.swo
 *~
@@ -32,3 +33,18 @@ Thumbs.db
 *.log
 npm-debug.log*
 
+# Environment
+.env
+!.env.example
+
+# Uploads
+uploads/*
+!uploads/.gitkeep
+
+# Backup files
+*_old.*
+*.bak
+*.backup
+
+# Cache
+.cache/
