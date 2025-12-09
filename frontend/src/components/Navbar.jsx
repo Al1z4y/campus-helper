@@ -1,8 +1,10 @@
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Plus, LogOut, LogIn, LayoutDashboard, GraduationCap, MapPin, Menu } from 'lucide-react'
+import { Plus, LogOut, LogIn, LayoutDashboard, MapPin, Menu } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
+import Logo from './Logo'
+import clsx from 'clsx'
 
-function Navbar({ onNewRequestClick, onMenuClick }) {
+function Navbar({ onNewRequestClick, onMenuClick, isSidebarOpen = true }) {
   const navigate = useNavigate()
   const location = useLocation()
   const { user, logout } = useAuth()
@@ -20,10 +22,10 @@ function Navbar({ onNewRequestClick, onMenuClick }) {
       <nav className="sticky top-0 z-50 bg-white shadow-md">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center px-6 py-4">
-            <div className="flex items-center space-x-3">
-              <GraduationCap className="text-blue-600" size={32} />
-              <h1 className="text-2xl font-bold text-blue-600">CampusConnect</h1>
-            </div>
+          <div className="flex items-center space-x-3">
+            <Logo size={32} />
+            <h1 className="text-2xl font-bold text-blue-600">Campus Helper</h1>
+          </div>
             <button
               onClick={() => navigate('/login')}
               className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors font-medium flex items-center space-x-2"
@@ -45,12 +47,16 @@ function Navbar({ onNewRequestClick, onMenuClick }) {
           <div className="flex items-center space-x-3">
             <button
               onClick={onMenuClick}
-              className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className={clsx(
+                'p-2 hover:bg-gray-100 rounded-lg transition-colors',
+                isSidebarOpen && 'lg:hidden'
+              )}
+              title={isSidebarOpen ? 'Close sidebar' : 'Open sidebar'}
             >
               <Menu size={24} />
             </button>
-            <GraduationCap className="text-blue-600" size={32} />
-            <h1 className="text-2xl font-bold text-blue-600">CampusConnect</h1>
+            <Logo size={32} />
+            <h1 className="text-2xl font-bold text-blue-600">Campus Helper</h1>
           </div>
 
           {/* RIGHT SIDE - Navigation */}

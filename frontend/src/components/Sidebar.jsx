@@ -8,9 +8,12 @@ import {
   MessageCircle, 
   User, 
   LogOut, 
-  X
+  X,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react'
 import clsx from 'clsx'
+import Logo from './Logo'
 
 function Sidebar({ isOpen, setIsOpen }) {
   const location = useLocation()
@@ -81,27 +84,36 @@ function Sidebar({ isOpen, setIsOpen }) {
         className={clsx(
           'fixed top-0 left-0 h-full bg-white border-r border-gray-200 shadow-lg z-50 transform transition-transform duration-300 ease-in-out',
           'flex flex-col',
-          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
+          isOpen ? 'translate-x-0' : '-translate-x-full',
           'w-64'
         )}
       >
         {/* Header */}
         <div className="p-4 border-b border-gray-200 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">CH</span>
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-600 to-purple-600">
+              <Logo size={40} showFallback={false} />
             </div>
             <div>
               <h2 className="font-bold text-gray-900">Campus Helper</h2>
               <p className="text-xs text-gray-500">FCCU</p>
             </div>
           </div>
-          <button
-            onClick={() => setIsOpen(false)}
-            className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <X size={20} />
-          </button>
+          <div className="flex items-center space-x-1">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="hidden lg:flex p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              title="Collapse sidebar"
+            >
+              <ChevronLeft size={20} className="text-gray-600" />
+            </button>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <X size={20} />
+            </button>
+          </div>
         </div>
 
         {/* User Info */}

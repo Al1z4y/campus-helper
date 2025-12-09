@@ -47,10 +47,11 @@ function App() {
     <Router>
       <div className="min-h-screen bg-gray-100">
         {user && <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />}
-        <div className={user ? 'lg:ml-64' : ''}>
+        <div className={user && isSidebarOpen ? 'lg:ml-64' : ''}>
           <Navbar 
             onNewRequestClick={() => setIsModalOpen(true)} 
-            onMenuClick={() => setIsSidebarOpen(true)}
+            onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            isSidebarOpen={isSidebarOpen}
           />
           <main>
             <Routes>
