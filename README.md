@@ -1,6 +1,5 @@
 # Campus Helper
 
-<<<<<<< HEAD
 A full-stack web platform for FCCU students and admins to manage campus service requests, browse announcements, navigate the campus map, and get instant answers from an AI campus assistant.
 
 ---
@@ -42,9 +41,6 @@ A full-stack web platform for FCCU students and admins to manage campus service 
 - Admin is automatically redirected to the dashboard on login
 
 ---
-=======
-A full-stack web platform for managing campus service requests.
->>>>>>> 20256285acda92e8163b3d47ef2193d9020f84c5
 
 ## Project Structure
 
