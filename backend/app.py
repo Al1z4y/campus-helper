@@ -67,7 +67,7 @@ def create_request():
         category = request.form.get('category')
         description = request.form.get('description')
         image_url = ''
-        
+
         # Handle file upload
         if 'attachment' in request.files:
             file = request.files['attachment']
@@ -77,26 +77,26 @@ def create_request():
                 # Add timestamp to make filename unique
                 timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_')
                 filename = timestamp + filename
-                
+
                 # Save file
                 filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 file.save(filepath)
-                
+
                 # Store relative path for database
                 image_url = f'uploads/{filename}'
-        
+
         if not category or not description:
             return jsonify({'error': 'Category and description are required'}), 400
-        
+
         new_request = ServiceRequest(
             category=category,
             description=description,
             image_url=image_url
         )
-        
+
         db.session.add(new_request)
         db.session.commit()
-        
+
         return jsonify(new_request.to_dict()), 201
     except Exception as e:
         print(f"Error in create_request: {str(e)}")  # Debug logging
@@ -123,12 +123,12 @@ def update_request(request_id):
     try:
         request_obj = db.get_or_404(ServiceRequest, request_id)
         data = request.get_json()
-        
+
         if 'status' in data:
             request_obj.status = data['status']
-        
+
         db.session.commit()
-        
+
         return jsonify(request_obj.to_dict()), 200
     except Exception as e:
         db.session.rollback()
@@ -141,7 +141,7 @@ def delete_request(request_id):
         request_obj = db.get_or_404(ServiceRequest, request_id)
         db.session.delete(request_obj)
         db.session.commit()
-        
+
         return jsonify({'message': 'Request deleted successfully'}), 200
     except Exception as e:
         db.session.rollback()
@@ -174,7 +174,7 @@ def chat():
         data = request.json
         user_msg = data.get('message', '').lower()
         import time
-        time.sleep(0.5) 
+        time.sleep(0.5)
 
         # 1. SPECIFIC BUILDINGS (Expanded)
         if 'n block' in user_msg:
@@ -185,7 +185,7 @@ def chat():
 
         elif 'e block' in user_msg:
             reply = "📍 <strong>E-Block:</strong><br>Located near the main entrance.<br>Admission Office is on the ground floor."
-        
+
         # 2. GENERAL LOCATIONS
         elif any(word in user_msg for word in ['where', 'location', 'map', 'find']):
             reply = "📍 <strong>Campus Navigation:</strong><br>Use the <strong>Map Tab</strong> for directions to:<br>- Library<br>- Lucas Center<br>- Hostels<br>- Cafeteria"
@@ -220,4 +220,3 @@ with app.app_context():
 if __name__ == '__main__':
     print("Starting Flask server on http://127.0.0.1:5000")
     app.run(debug=True, port=5000, host='127.0.0.1')
-
